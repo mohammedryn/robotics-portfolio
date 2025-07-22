@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotics Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A;
+            color: #E0E0E0;
+        }
+        .font-mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+        #robot-canvas-container {
+            cursor: grab;
+            width: 100%;
+            height: 100%;
+        }
+        #robot-canvas-container:active {
+            cursor: grabbing;
+        }
+        /* Custom scrollbar for a more modern look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4a4a4a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5a5a5a;
+        }
+        .glow {
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.5), 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+        .card {
+            background-color: rgba(26, 26, 26, 0.7);
+            border: 1px solid #2a2a2a;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            border-color: #00ffff;
+            transform: translateY(-5px);
+        }
+        .clickable-card {
+            cursor: pointer;
+        }
+        .ai-button, .github-button {
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            transition: all 0.3s ease;
+        }
+        .ai-button:hover, .github-button:hover {
+            box-shadow: 0 0 20px #00c6ff;
+            transform: translateY(-2px);
+        }
+        .modal-overlay {
+            background-color: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .cert-slide, .tinkercad-slide {
+            transition: transform 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <div class="min-h-screen w-full p-4 lg:p-8">
+        <main class="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full h-full">
+            
+            <!-- Left Column: 3D Robot Viewer -->
+            <div class="relative w-full h-[50vh] lg:h-[calc(100vh-4rem)] rounded-lg border border-gray-800 bg-black">
+                <div id="robot-canvas-container"></div>
+                <div class="absolute top-4 left-4 p-2 px-3 bg-black/50 border border-gray-700 rounded-md">
+                    <h2 class="font-mono text-sm text-cyan-400">MODEL: ATLAS-PRIME</h2>
+                </div>
+                 <div class="absolute bottom-4 left-4 text-xs text-gray-500">
+                    <p>Use mouse/touch to rotate and zoom.</p>
+                </div>
+            </div>
+
+            <!-- Right Column: Portfolio Content -->
+            <div class="w-full h-full overflow-y-auto" style="max-height: calc(100vh - 4rem);">
+                <div class="flex flex-col gap-8">
+                    
+                    <!-- Header -->
+                    <div class="flex items-center gap-6">
+                        <img src="assets/images/profile_picture.jpg" alt="Mohammed Rayan" class="w-28 h-28 rounded-full object-cover border-4 border-cyan-500 shadow-lg glow">
+                        <div>
+                            <h1 class="text-4xl md:text-6xl font-bold tracking-tighter">MOHAMMED RAYAN</h1>
+                            <p class="text-xl md:text-2xl text-cyan-400 font-mono glow mt-1">Robotics & Embedded Systems Enthusiast</p>
+                        </div>
+                    </div>
+
+                    <!-- About Section -->
+                    <section>
+                        <h2 class="font-mono text-lg text-gray-400">// ABOUT_ME</h2>
+                        <p class="mt-2 text-gray-300 leading-relaxed">
+                           A forward-thinking Electronics Engineering student with an insatiable curiosity for the future of automation. I don't just build circuits and write code; I orchestrate the symphony of hardware and software that brings intelligent machines to life. From pioneering swarm drone behaviors to architecting robust embedded systems, my work is driven by a singular vision: to engineer the next generation of robotics that will redefine the boundaries of what's possible.
+                        </p>
+                    </section>
+
+                    <!-- Skills Section -->
+                    <section id="skills-section">
+                        <h2 class="font-mono text-lg text-gray-400">// CORE_SKILLS</h2>
+                        <div class="mt-2 flex flex-wrap gap-2">
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">C</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">C++</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">Python</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">ROS</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">ROS2</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">SLAM</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">AMCL</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">Path Planning</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">Localization</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">MATLAB</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">Arduino</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">STM32</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">Raspberry Pi</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">NVIDIA Jetson</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">Embedded Programming</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">Lidar</span>
+                            <span class="skill-item bg-gray-800 text-cyan-300 text-xs font-mono px-3 py-1 rounded-full">Depth Cameras</span>
+                        </div>
+                    </section>
+
+                    <!-- Projects Section -->
+                    <section id="projects-section">
+                        <h2 class="font-mono text-lg text-gray-400">// FEATURED_PROJECTS (Click on each Section to view it)</h2>
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div id="walker-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">Self-Balancing Assistive Walker</h3>
+                                <p class="text-sm text-gray-400 mt-1">A hybrid PID and Reinforcement Learning robot for adaptive balancing and control.</p>
+                            </div>
+                             <div id="cape-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">Smart Power Home Automation (CAPE)</h3>
+                                <p class="text-sm text-gray-400 mt-1">An award-winning IoT solution for real-time energy monitoring, safety, and efficiency.</p>
+                            </div>
+                            <div id="aurora-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">AURORA – Autonomous Mobile Robot</h3>
+                                <p class="text-sm text-gray-400 mt-1">A state-of-the-art AMR for logistics, industrial transport, and indoor mobility challenges.</p>
+                            </div>
+                            <div id="line-follower-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">Analog PID Line Follower</h3>
+                                <p class="text-sm text-gray-400 mt-1">A high-precision robot using analog IR sensors and PID control for smooth line tracking.</p>
+                            </div>
+                            <div id="parking-bot-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">Autonomous Parking Robot</h3>
+                                <p class="text-sm text-gray-400 mt-1">A line-following robot with automated slot assignment and parking maneuvers.</p>
+                            </div>
+                            <div id="fatigue-detection-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">Fatigue Detection System</h3>
+                                <p class="text-sm text-gray-400 mt-1">A smart embedded alert mechanism for drowsy driving prevention using Arduino.</p>
+                            </div>
+                            <div id="smart-vision-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">Smart Vision System for Disabilities</h3>
+                                <p class="text-sm text-gray-400 mt-1">An ESP32-CAM based system for visual recognition and feedback to assist the visually impaired.</p>
+                            </div>
+                            <div id="light-follower-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">Light Follower Robot</h3>
+                                <p class="text-sm text-gray-400 mt-1">An autonomous robot that detects and follows the brightest light source using LDRs.</p>
+                            </div>
+                            <div id="corrosion-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">AI-Powered Corrosion Monitoring</h3>
+                                <p class="text-sm text-gray-400 mt-1">An intelligent IoT system using impedance spectroscopy for predictive structural health monitoring.</p>
+                            </div>
+                             <div id="sign-language-glove-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">Sign Language Interpreter Glove</h3>
+                                <p class="text-sm text-gray-400 mt-1">The project I'm most enthusiastic about. An intelligent wearable system to recognize and teach sign language using ML and a chatbot.</p>
+                            </div>
+                            <div id="tinkercad-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">Tinkercad Circuit Simulations</h3>
+                                <p class="text-sm text-gray-400 mt-1">A curated collection of circuits designed and simulated in Tinkercad.</p>
+                            </div>
+                             
+                             <div id="fruitbridge-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">FruitBridge</h3>
+                                <p class="text-sm text-gray-400 mt-1">Top 20 Finalist in Amazon Sambhav Hackathon out of 50,000+ participants.</p>
+                            </div>
+                            
+                        </div>
+                    </section>
+                    
+                    <!-- Positions of Responsibility Section -->
+                    <section>
+                        <h2 class="font-mono text-lg text-gray-400">// POSITIONS_OF_RESPONSIBILITY</h2>
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div id="ieee-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">Vice Technical Head</h3>
+                                <p class="text-sm text-gray-400 mt-1">Sensors Council, IEEE-RITB</p>
+                            </div>
+                            <div id="volante-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">Electrical Subsystem Member</h3>
+                                <p class="text-sm text-gray-400 mt-1">Team Volante (Go-Kart & Buggy Club), MSRIT</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Achievements Section -->
+                    <section>
+                        <h2 class="font-mono text-lg text-gray-400">// ACHIEVEMENTS</h2>
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div id="hardware-award-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">Best Hardware Project</h3>
+                                <p class="text-sm text-gray-400 mt-1">Ignitex Competition, BGSIT College</p>
+                            </div>
+                            <div id="design-award-card" class="card clickable-card p-4 rounded-lg">
+                                <h3 class="font-bold text-cyan-400">Best Technical Design</h3>
+                                <p class="text-sm text-gray-400 mt-1">Robosoccer Bot, DSU</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Certifications Section -->
+                    <section>
+                        <h2 class="font-mono text-lg text-gray-400">// CERTIFICATIONS</h2>
+                        <div class="relative mt-4 p-4 bg-gray-900/50 border border-gray-800 rounded-lg">
+                            <div id="cert-carousel" class="relative w-full max-w-xl mx-auto overflow-hidden">
+                                <div id="cert-container" class="flex transition-transform duration-500 ease-in-out">
+                                    <!-- Certificate Slides -->
+                                    <div class="cert-slide flex-shrink-0 w-full text-center"><img src="assets/images/cert_ignitex.jpg" class="mx-auto max-h-80 rounded-md border-2 border-gray-700"><p class="mt-2 text-sm text-gray-400">Ignitex 24-Hour National Level Hackathon</p></div>
+                                    <div class="cert-slide flex-shrink-0 w-full text-center"><img src="assets/images/cert_robothon.jpg" class="mx-auto max-h-80 rounded-md border-2 border-gray-700"><p class="mt-2 text-sm text-gray-400">National Level Robothon</p></div>
+                                    <div class="cert-slide flex-shrink-0 w-full text-center"><img src="assets/images/cert_robosoccer_dsu.jpg" class="mx-auto max-h-80 rounded-md border-2 border-gray-700"><p class="mt-2 text-sm text-gray-400">RoboSoccer Participation - DSU</p></div>
+                                    <div class="cert-slide flex-shrink-0 w-full text-center"><img src="assets/images/cert_ieee_expo.jpg" class="mx-auto max-h-80 rounded-md border-2 border-gray-700"><p class="mt-2 text-sm text-gray-400">IEEE Project Expo 2025</p></div>
+                                    <div class="cert-slide flex-shrink-0 w-full text-center"><img src="assets/images/cert_micro_football.jpg" class="mx-auto max-h-80 rounded-md border-2 border-gray-700"><p class="mt-2 text-sm text-gray-400">Micro-Football Embedded Challenge</p></div>
+                                    <div class="cert-slide flex-shrink-0 w-full text-center"><img src="assets/images/cert_techfest.jpg" class="mx-auto max-h-80 rounded-md border-2 border-gray-700"><p class="mt-2 text-sm text-gray-400">RIT TechFest Volunteering</p></div>
+                                    <div class="cert-slide flex-shrink-0 w-full text-center"><img src="assets/images/cert_tinkercad.jpg" class="mx-auto max-h-80 rounded-md border-2 border-gray-700"><p class="mt-2 text-sm text-gray-400">Inter Execom Hackathon</p></div>
+                                    <div class="cert-slide flex-shrink-0 w-full text-center"><img src="assets/images/cert_ieee_membership.jpg" class="mx-auto max-h-80 rounded-md border-2 border-gray-700"><p class="mt-2 text-sm text-gray-400">IEEE Student Membership 2025</p></div>
+                                    <div class="cert-slide flex-shrink-0 w-full text-center"><img src="assets/images/cert_hackfinity.jpg" class="mx-auto max-h-80 rounded-md border-2 border-gray-700"><p class="mt-2 text-sm text-gray-400">Hackfinity 2025 Hackathon</p></div>
+                                </div>
+                            </div>
+                            <button id="prev-cert" class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/80 transition">&lt;</button>
+                            <button id="next-cert" class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/80 transition">&gt;</button>
+                        </div>
+                    </section>
+
+                    <!-- Hobbies & Interests Section -->
+                    <section>
+                        <h2 class="font-mono text-lg text-gray-400">// HOBBIES_&_INTERESTS</h2>
+                        <div class="mt-4 space-y-4 text-gray-300">
+                            <p><b>Audiophile by soul</b> – Passionately immersed in music that speaks to both emotion and engineering. Deeply influenced by the atmospheric textures of Frank Ocean, the dark, cinematic depth of The Weeknd, and the creative chaos of Ye. A lifelong student of sound, I balance my love for modern R&B and hip-hop with a reverence for classic metal and rock legends like Black Sabbath, Metallica, Eric Clapton, and Scorpions — obsessed with the raw analog energy and guitar mastery that shaped decades.</p>
+                            <p><b>Motorcycle Enthusiast</b> – Ride not just for the thrill but for the therapy. Fascinated by the mechanics, custom culture, and design of motorcycles — from tuning engines to exploring backroads, two wheels always feel like home.</p>
+                        </div>
+                        <div class="mt-6">
+                             <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3VZstfplTkI4Funw6TeETY?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                        </div>
+                    </section>
+
+                    <!-- AI Project Ideation Section -->
+                    <section>
+                        <h2 class="font-mono text-lg text-gray-400">// ✨ AI_PROJECT_IDEATION</h2>
+                        <p class="mt-2 text-gray-300 leading-relaxed">
+                            Leverage the power of AI to generate new project ideas based on my skills and experience. Click the button below to get inspired!
+                        </p>
+                        <button id="generate-ideas-btn" class="ai-button mt-4 px-6 py-2 rounded-lg text-white font-semibold">
+                            Generate Project Ideas
+                        </button>
+                    </section>
+
+                    <!-- Contact Section -->
+                    <section>
+                        <h2 class="font-mono text-lg text-gray-400">// CONNECT</h2>
+                        <div class="mt-2 flex gap-4">
+                            <a href="#" class="text-cyan-400 hover:underline">GitHub</a>
+                            <a href="#" class="text-cyan-400 hover:underline">LinkedIn</a>
+                            <a href="mailto:mohammedrayan@example.com" class="text-cyan-400 hover:underline">Email</a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="ai-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-2/3 lg:w-1/2 max-h-[80vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-cyan-400 glow">✨ AI-Generated Project Ideas</h2>
+                <button id="close-ai-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div id="ai-modal-content" class="text-gray-300"></div>
+        </div>
+    </div>
+
+    <div id="hardware-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">🔌 Smart Power Home Automation System (CAPE)</h3>
+                <button id="close-hardware-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <img src="assets/images/hardware.jpg" alt="Project Hardware" class="rounded-lg w-full object-cover">
+                    <img src="assets/images/trophy.jpg" alt="Award Trophy" class="rounded-lg w-full object-cover">
+                </div>
+                 <p class="mb-4 text-gray-300">A comprehensive end-to-end IoT solution for real-time energy monitoring, automated billing, and AI-driven predictive maintenance, designed for homes, industries, and smart city infrastructure.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="design-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">🏆 WD RoboSoccer Bot</h3>
+                <button id="close-design-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div>
+                <div class="mb-4">
+                    <img src="assets/images/robosoccer.jpg" alt="RoboSoccer Bot" class="rounded-lg w-full object-cover">
+                </div>
+                <p class="mb-4 text-gray-300">Designed and built a high-torque 4-wheel drive robot for a RoboSoccer competition. Integrated four JGB motors with precision control using a Sabertooth dual-channel motor driver. Enabled smooth remote operation through an FS-iA10B receiver paired with a multi-channel transmitter. Optimized mechanical design for speed, stability, and agility on the soccer arena.</p>
+                <p class="text-cyan-300 font-semibold">🏆 Awarded Best Technical Design for innovative chassis layout and robust motor control strategy.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="ieee-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">Vice Technical Head – IEEE Sensors Council, RIT-B</h3>
+                <button id="close-ieee-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div>
+                <p class="text-lg text-gray-300 mb-4">Driving Innovation, Events, and Real-World Sensor Applications</p>
+                <div class="mb-6">
+                    <video class="w-full rounded-lg" controls autoplay muted loop>
+                        <source src="assets/images/ieee_video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <ul class="list-disc list-inside text-gray-400 space-y-4">
+                    <li>Spearheaded the flagship RoboSoccer event at TechFest 2025, RIT-B — designed and built four custom 4WD RoboSoccer bots from scratch, controlled via handcrafted wireless remotes using nRF modules. The bots demonstrated agility, precision, and responsiveness on the field, making this the most technically acclaimed and crowd-favorite event of the entire fest.</li>
+                    <li>Conceptualized and executed “Breakpoint”, a unique circuit debugging challenge. Designed two custom sets of PCBs — one with perfect functionality and the other embedded with smart faults. Participants were given the faulty set, testing their real-world electronics and fault-finding skills. The event was a massive hit, blending creativity, hands-on electronics, and critical thinking.</li>
+                    <li>Organized and developed the “SensoryBot” challenge, a beginner-to-advanced robotics event where participants built sensor-based bots under guided problem statements. Personally designed and demonstrated four fully working bots — line follower, light follower, edge detector, and maze solver — as reference builds. Supplied kits and support, turning it into a super engaging, fun, and educational experience.</li>
+                    <li>Currently leading an advanced drone development project under IEEE-RITB, focused on thermal imaging for industrial and defense applications. The drone uses infrared sensors to detect human presence behind obstacles and identify thermal anomalies in machines, aiming to enhance rescue ops, surveillance, and predictive maintenance using real-time sensor fusion and embedded intelligence.</li>
+                </ul>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                    <img src="assets/images/ieee_photo1.jpg" alt="RoboSoccer Event" class="rounded-lg w-full object-cover">
+                    <img src="assets/images/ieee_photo2.jpg" alt="Breakpoint PCB Challenge" class="rounded-lg w-full object-cover">
+                    <img src="assets/images/ieee_photo3.jpg" alt="SensoryBot Challenge" class="rounded-lg w-full object-cover">
+                    <img src="assets/images/ieee_photo4.jpg" alt="Drone Development Project" class="rounded-lg w-full object-cover">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="volante-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">Electrical Subsystem Member – Team Volante</h3>
+                <button id="close-volante-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div>
+                <p class="text-lg text-gray-300 mb-4">EV Go-Kart and Off-Road Buggy Development | Power Systems | Safety Electronics</p>
+                <div class="mb-4">
+                    <img src="assets/images/circuit.jpg" alt="TSAL Circuit Diagram" class="rounded-lg w-full object-cover">
+                </div>
+                <ul class="list-disc list-inside text-gray-400 space-y-4">
+                    <li>Core member of Team Volante, RIT-B’s premier automotive student club focused on building electric go-karts and off-road buggies for national-level EV design competitions.</li>
+                    <li>Contributed to the design and implementation of low-voltage (LV) safety circuits for the team’s electric buggy, including:
+                        <ul class="list-[circle] list-inside ml-6 mt-2 space-y-1">
+                            <li><b>TSAL (Tractive System Active Light):</b> Designed a robust and compliant indicator circuit to signal the high-voltage system's active state, using LED arrays and status feedback from the shutdown loop.</li>
+                            <li><b>Shutdown Circuit:</b> Helped integrate emergency kill-switches, brake plausibility checks, and interlocks into a centralized low-voltage loop to ensure rapid and safe deactivation of the powertrain in case of faults or driver-triggered events.</li>
+                        </ul>
+                    </li>
+                    <li>Worked on power distribution and protection planning, ensuring clean and regulated 12V/5V supply lines for sensors, dashboard, telemetry, and auxiliary systems, while adhering to competition rules and safety protocols.</li>
+                    <li>Collaborated with mechanical and drivetrain teams to route wiring safely through the chassis, enabling modular testing, quick diagnostics, and efficient debugging during race day prep.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="walker-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">🤖 Reinforcement Learning Self-Balancing Robot</h3>
+                <button id="close-walker-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <img src="assets/images/walker.jpg" alt="Self-Balancing Robot" class="rounded-lg w-full object-cover">
+                    <img src="assets/images/walker_schematic.jpg" alt="Robot Schematic" class="rounded-lg w-full object-cover">
+                </div>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">Objective</h4>
+                <p class="text-gray-400 mb-4">To design and develop a real-time, self-balancing two-wheeled robot that integrates traditional PID control with a reinforcement learning (RL) model (PPO) for adaptive balancing and dynamic control. The project aims to demonstrate how real-world robotics can benefit from hybrid control systems, improving stability and responsiveness in uncertain environments.</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">Key Highlights</h4>
+                <ul class="list-disc list-inside text-gray-400 space-y-2">
+                    <li>Developed a real-time balancing robot using an MPU6050 IMU, BTS7960 motor drivers, Arduino Mega, and a Raspberry Pi for computation and PPO integration.</li>
+                    <li>Implemented a dual control loop: Primary: PID controller for high-frequency, deterministic corrections. Secondary: PPO (Proximal Policy Optimization) model trained using real robot sensor data for adaptive angle correction.</li>
+                    <li>Collected real-time data over serial (angle, error, zone, PID output) and built a custom dataset using Python & CSV logging.</li>
+                    <li>Designed and trained a custom RL environment (OpenAI Gym compatible) based on real-world error-action data using Stable-Baselines3 with PPO.</li>
+                </ul>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">Tools & Frameworks</h4>
+                <p class="text-gray-400"><b>🧠 Reinforcement Learning:</b> PPO via Stable-Baselines3 | <b>🧰 Embedded Systems:</b> Arduino C++ (MPU6050, motor control, PWM) | <b>🐍 Python:</b> Serial communication, data logging, RL model training</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">Achievements & Results</h4>
+                <ul class="list-disc list-inside text-gray-400 space-y-2">
+                    <li>Achieved robust self-balancing with &lt; ±2° steady-state error under most conditions.</li>
+                    <li>Trained PPO agent successfully learned corrections that improved recovery time after large disturbances by up to 25%.</li>
+                </ul>
+                <div class="mt-6">
+                    <a href="https://github.com/mohammedryn/self_balance_bot" target="_blank" rel="noopener noreferrer" class="github-button inline-block px-6 py-2 rounded-lg text-white font-semibold">
+                        View Code on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cape-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">🏆 Smart Power Home Automation System (CAPE)</h3>
+                <button id="close-cape-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div>
+                 <div class="mb-4">
+                    <img src="assets/images/hardware.jpg" alt="CAPE Project Hardware" class="rounded-lg w-full object-cover">
+                </div>
+                <p class="mb-4 text-gray-300">An advanced, full-stack IoT solution developed to tackle critical challenges in energy consumption, safety, and efficiency — CAPE (Control and Automation of Power Efficiency) is a hardware-software integrated system that enables users to monitor, control, and optimize their electrical usage in real time.</p>
+                <p class="text-cyan-300 font-semibold mb-2">🥇 Awarded “Best Hardware Project” for its innovative design and real-world impact.</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🎯 Problem It Solves</h4>
+                <ul class="list-disc list-inside text-gray-400 space-y-1">
+                    <li>Unmonitored energy consumption leading to high electricity bills.</li>
+                    <li>No real-time visibility into per-device power usage.</li>
+                    <li>Risk of fire or equipment damage due to unnoticed overcurrent/voltage.</li>
+                    <li>Manual and delayed electricity billing process.</li>
+                    <li>Lack of predictive maintenance or preventive alerts in home electrical systems.</li>
+                </ul>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🌟 Features & Functionality</h4>
+                <ul class="list-disc list-inside text-gray-400 space-y-2">
+                    <li><b>Real-Time Monitoring:</b> Voltage and current readings captured per device via sensors connected to an Arduino.</li>
+                    <li><b>Web Dashboard (Flask-based):</b> Real-time data visualization and device control, accessible via local network.</li>
+                    <li><b>Automated Billing System:</b> Bills are generated every 30 days and can also be triggered on-demand, using CSV-based consumption logs.</li>
+                    <li><b>AI-Powered Predictive Maintenance:</b> Anomaly detection engine (built with LightGBM and scikit-learn) predicts potential faults based on historical energy usage patterns.</li>
+                </ul>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🔧 Technology Stack</h4>
+                <p class="text-gray-400"><b>Hardware:</b> Arduino UNO, Current & Voltage Sensors, Relays, Keypad, GSM module, Raspberry Pi | <b>Software:</b> Python, Flask, CSV logging, pandas, NumPy, scikit-learn, LightGBM | <b>Frontend:</b> HTML, CSS, Chart.js</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🧠 Why This Project Stands Out</h4>
+                <ul class="list-disc list-inside text-gray-400 space-y-2">
+                    <li>Combines real-time monitoring, automated control, AI, and IoT into a fully functional and scalable prototype.</li>
+                    <li>Goes beyond traditional automation by providing proactive safety and personalized energy-saving advice.</li>
+                </ul>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🚀 Future Goals</h4>
+                <p class="text-gray-400">We are actively working on transforming this prototype into a market-ready product. The next stage includes designing a single integrated PCB, enabling plug-and-play compatibility, and adding mobile app integration.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="corrosion-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">🛠️ AI-Powered Corrosion Monitoring System</h3>
+                <button id="close-corrosion-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div>
+                 <div class="mb-4">
+                    <img src="assets/images/corrosion_system.jpg" alt="Corrosion Monitoring System" class="rounded-lg w-full object-cover">
+                </div>
+                <p class="mb-4 text-gray-300">This project presents a scalable, low-cost, and intelligent solution to one of the most critical challenges in civil, marine, and industrial infrastructure: corrosion monitoring and prediction. Using the AD5933 impedance analyzer IC and a Raspberry Pi 3B+, I built a real-time system that monitors the corrosion state of metal samples submerged in corrosive media.</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🔍 Problem Statement</h4>
+                <p class="text-gray-400 mb-4">Traditional corrosion monitoring techniques are often invasive, expensive, and incapable of real-time analysis or prediction. This project aims to solve that by providing a portable, scalable, and intelligent corrosion detection system using embedded hardware and software.</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">⚙️ Technologies & Tools Used</h4>
+                <p class="text-gray-400"><b>Hardware:</b> AD5933 Impedance Analyzer, Raspberry Pi 3B+ | <b>Software:</b> Python (smbus2, pandas, NumPy), matplotlib, TensorFlow Lite (planned) | <b>IoT:</b> ThingSpeak & Node-RED (optional)</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">📊 Key Features</h4>
+                <ul class="list-disc list-inside text-gray-400 space-y-2">
+                    <li>Real-time impedance measurement using AD5933.</li>
+                    <li>Visualization of impedance vs. time to observe corrosion trends.</li>
+                    <li>Data logging with timestamped records for ML training.</li>
+                </ul>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🚀 Future Advancements</h4>
+                <p class="text-gray-400">Train and deploy advanced ML models to predict corrosion rate and remaining useful life (RUL), add environmental sensors, and build solar-powered LoRa-based sensor nodes for remote deployment.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="aurora-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">🌟 AURORA – Autonomous Mobile Robot (AMR)</h3>
+                <button id="close-aurora-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div>
+                 <div class="mb-4">
+                    <img src="assets/images/aurora.jpg" alt="AURORA AMR" class="rounded-lg w-full object-cover">
+                </div>
+                <p class="mb-4 text-gray-300">AURORA is a state-of-the-art Autonomous Mobile Robot (AMR) developed by the Robotics and Automation Society (RAS) to address real-world logistics, industrial transport, and indoor mobility challenges. Built with modularity, intelligence, and adaptability in mind, AURORA integrates high-performance hardware with an intelligent software stack capable of localization, navigation, environment sensing, and fail-safe autonomous operations.</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">⚙️ Core Objectives</h4>
+                <ul class="list-disc list-inside text-gray-400 space-y-1">
+                    <li>Enable intelligent autonomous navigation in cluttered indoor spaces.</li>
+                    <li>Transport dynamic payloads up to 100 kg.</li>
+                    <li>React to unpredictable obstacles with sub-second delay.</li>
+                    <li>Learn and optimize routes over time using onboard edge computing</li>
+                    <li>Serve as a scalable platform for warehouse, research, and industrial logistics</li>
+                </ul>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🧩 System Architecture</h4>
+                <p class="text-gray-400"><b>Mechanical:</b> Chassis: Aerospace-grade aluminum frame, Drive: 4WD skid-steer, 48V 30Ah Li-ion pack. | <b>Compute:</b> Raspberry Pi 5 (SLAM, Path Planning), Arduino Mega 2560 (Low-level control). | <b>Sensors:</b> 2D LIDAR, ToF, IMU, Gas/Temp/Humidity, Load Cells.</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🧠 Software Stack</h4>
+                <p class="text-gray-400"><b>OS:</b> Raspberry Pi OS | <b>Middleware:</b> ROS2 Humble | <b>Navigation:</b> RTAB-Map/Cartographer + Nav2 | <b>UI:</b> Flask</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🚀 Future Advancements</h4>
+                <p class="text-gray-400">Auto-docking/charging, fleet/swarm logistics, mission profiles, and edge-based reinforcement learning for path optimization.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="line-follower-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">Analog PID-Based Line Following Robot</h3>
+                <button id="close-line-follower-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div>
+                 <div class="mb-4">
+                    <video class="w-full rounded-lg" controls autoplay muted loop>
+                        <source src="assets/images/line_follower.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <p class="mb-4 text-gray-300">This project is a line follower robot built using analog IR sensors and a PID (Proportional-Derivative) control algorithm to follow a black line on a white surface with high precision and smooth movement. The robot uses three analog IR sensors to detect the line position and adjusts its motor speeds accordingly using a PID algorithm implemented on an Arduino-based microcontroller. The motor control is achieved using the DRV8833 dual H-bridge motor driver.</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">⚙️ Hardware Components</h4>
+                <p class="text-gray-400">Arduino (e.g., Nano/Uno), 3x TCRT5000 analog IR sensors, DRV8833 motor driver, 2x N20 DC gear motors, Wheels and chassis, Battery pack (7.4V or similar).</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🧠 How It Works</h4>
+                <ul class="list-disc list-inside text-gray-400 space-y-2">
+                    <li>Three analog IR sensors detect the line, giving values based on surface reflectivity.</li>
+                    <li>A weighted average method computes the error in the robot's position.</li>
+                    <li>The Proportional (Kp) and Derivative (Kd) components are used to calculate the correction factor.</li>
+                    <li>The left and right motor speeds are adjusted based on the correction value to steer the robot.</li>
+                </ul>
+                 <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">✅ Project Highlights</h4>
+                <ul class="list-disc list-inside text-gray-400 space-y-2">
+                    <li>Implements PID control for smoother and accurate line following.</li>
+                    <li>Works well on curved tracks due to proportional correction.</li>
+                    <li>Ideal as a foundation for advanced robotics: maze solvers, obstacle avoiders, or autonomous path planners.</li>
+                </ul>
+                <div class="mt-6">
+                    <a href="https://github.com/mohammedryn/Analog-Line-follower-bot" target="_blank" rel="noopener noreferrer" class="github-button inline-block px-6 py-2 rounded-lg text-white font-semibold">
+                        View Code on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="smart-vision-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">🔍 ESP32-CAM Smart Vision System</h3>
+                <button id="close-smart-vision-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div>
+                 <div class="mb-4">
+                    <img src="assets/images/smart_vision.jpg" alt="ESP32-CAM System" class="rounded-lg w-full object-cover">
+                </div>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🧠 Project Objective</h4>
+                <p class="mb-4 text-gray-300">The goal of this project is to develop an affordable, compact, and efficient image processing system using the ESP32-CAM module to assist people with disabilities—particularly those with visual impairments or mobility challenges. The system is designed to provide visual input recognition, process real-time images, and convert them into actionable feedback, such as voice alerts or control signals.</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🔧 Hardware Used</h4>
+                <p class="text-gray-400">ESP32-CAM Module (OV2640 camera), FTDI Programmer, 5V regulated power source, MicroSD card, Peripheral output (buzzer, speaker, or vibration motor).</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🔬 Mathematics & Algorithms Involved</h4>
+                <ul class="list-disc list-inside text-gray-400 space-y-2">
+                    <li><b>Image Representation:</b> Images are matrices of pixels (RGB image → 3D matrix).</li>
+                    <li><b>Color Thresholding & Grayscale Conversion.</b></li>
+                    <li><b>Edge Detection (Sobel Operator).</b></li>
+                    <li><b>Face/Object Detection (Haar Cascades or TinyML).</b></li>
+                </ul>
+                 <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🤝 Social Impact</h4>
+                 <p class="text-gray-400 mb-4">This project is a step toward accessible assistive technology. This low-cost ESP32-CAM implementation can guide visually impaired individuals, help individuals with limited mobility recognize surroundings, and be expanded into smart gloves, wearable visors, or home assistant devices.</p>
+                <div class="mt-6">
+                    <a href="https://github.com/mohammedryn/ESP32-CAM-Based-Smart-Vision-System-for-Assisting-people-with-Disabilities" target="_blank" rel="noopener noreferrer" class="github-button inline-block px-6 py-2 rounded-lg text-white font-semibold">
+                        View Code on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tinkercad-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">Tinkercad Circuit Simulations</h3>
+                <button id="close-tinkercad-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div class="relative">
+                <div id="tinkercad-container" class="flex transition-transform duration-500 ease-in-out">
+                    <div class="tinkercad-slide flex-shrink-0 w-full"><iframe width="100%" height="450" src="https://www.tinkercad.com/embed/jEPuCFSutcS" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+                    <div class="tinkercad-slide flex-shrink-0 w-full"><iframe width="100%" height="450" src="https://www.tinkercad.com/embed/7C83tDy6uU2" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+                    <div class="tinkercad-slide flex-shrink-0 w-full"><iframe width="100%" height="450" src="https://www.tinkercad.com/embed/gigUzqmrnkh" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+                    <div class="tinkercad-slide flex-shrink-0 w-full"><iframe width="100%" height="450" src="https://www.tinkercad.com/embed/dqMelPUfiAD" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+                    <div class="tinkercad-slide flex-shrink-0 w-full"><iframe width="100%" height="450" src="https://www.tinkercad.com/embed/7HNDSsBEwJ4" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+                    <div class="tinkercad-slide flex-shrink-0 w-full"><iframe width="100%" height="450" src="https://www.tinkercad.com/embed/4KSazagJIOb" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+                    <div class="tinkercad-slide flex-shrink-0 w-full"><iframe width="100%" height="450" src="https://www.tinkercad.com/embed/7k9BCWuVyEx" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+                    <div class="tinkercad-slide flex-shrink-0 w-full"><iframe width="100%" height="450" src="https://www.tinkercad.com/embed/ksrCcBBkKqG" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+                    <div class="tinkercad-slide flex-shrink-0 w-full"><iframe width="100%" height="450" src="https://www.tinkercad.com/embed/fYLabchuXhY" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+                    <div class="tinkercad-slide flex-shrink-0 w-full"><iframe width="100%" height="450" src="https://www.tinkercad.com/embed/dl2V5YPRbwX" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+                    <div class="tinkercad-slide flex-shrink-0 w-full"><iframe width="100%" height="450" src="https://www.tinkercad.com/embed/b46shDbQChq" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+                    <div class="tinkercad-slide flex-shrink-0 w-full"><iframe width="100%" height="450" src="https://www.tinkercad.com/embed/0BWMoWy6qii" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+                    <div class="tinkercad-slide flex-shrink-0 w-full"><iframe width="100%" height="450" src="https://www.tinkercad.com/embed/lOqHjK86Qxs" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+                    <div class="tinkercad-slide flex-shrink-0 w-full"><iframe width="100%" height="450" src="https://www.tinkercad.com/embed/gW4TKImJghl" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+                    <div class="tinkercad-slide flex-shrink-0 w-full"><iframe width="100%" height="450" src="https://www.tinkercad.com/embed/7hCrlmRjZit" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+                </div>
+                <button id="prev-tinkercad" class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/80 transition">&lt;</button>
+                <button id="next-tinkercad" class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/80 transition">&gt;</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="parking-bot-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">🅿️ Autonomous Parking Robot</h3>
+                <button id="close-parking-bot-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div>
+                 <div class="mb-4">
+                    <img src="assets/parking_bot.jpg" alt="Parking Bot" class="rounded-lg w-full object-cover">
+                </div>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🎯 Project Objective</h4>
+                <p class="mb-4 text-gray-300">To design and implement a fully autonomous parking robot capable of randomly assigning itself to one of twelve designated slots and performing precise parking and exit maneuvers — all while following a line-based navigation path and providing real-time visual feedback using a 4-digit 7-segment display.</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🧰 Hardware Used</h4>
+                <p class="text-gray-400">🧠 Arduino Uno | 🚗 2x DC Motors & L298N Driver | 🟢 3x HW201 IR Sensors | 🔲 TM1637 4-digit display | 🔋 7.4V/12V Li-ion PSU</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">⚙️ Functional Workflow</h4>
+                <ul class="list-disc list-inside text-gray-400 space-y-2">
+                    <li><b>Random Slot Assignment:</b> Generates a random slot (1-12) and displays it.</li>
+                    <li><b>Line-Following Navigation:</b> Autonomously follows a path using IR sensors.</li>
+                    <li><b>Parking Logic:</b> Reverses into the assigned slot and displays a 10-second countdown.</li>
+                    <li><b>Exit Phase:</b> Exits the slot after the countdown and continues on the path.</li>
+                </ul>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🌟 Key Highlights</h4>
+                <ul class="list-disc list-inside text-gray-400 space-y-2">
+                    <li>Robust state-machine-based logic handles each stage of operation cleanly.</li>
+                    <li>Real-time slot display and countdown improve clarity and challenge compliance.</li>
+                </ul>
+                <div class="mt-6">
+                    <a href="https://github.com/mohammedryn/Parking-bot-using-IR-Sensors" target="_blank" rel="noopener noreferrer" class="github-button inline-block px-6 py-2 rounded-lg text-white font-semibold">
+                        View Code on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="fatigue-detection-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">Fatigue Detection System Using Arduino Uno</h3>
+                <button id="close-fatigue-detection-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div>
+                <p class="mb-4 text-gray-300">This project focuses on designing and implementing a low-cost, hardware-based driver fatigue detection system using simple, reliable sensors and embedded control logic. It aims to reduce road accidents caused by drowsy driving, particularly for truck drivers, night-shift taxi drivers, and long-distance commuters.</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">Key Features:</h4>
+                <ul class="list-disc list-inside text-gray-400 space-y-2">
+                    <li>Real-time monitoring of driver alertness using two simple sensors.</li>
+                    <li>Immediate warning using sound and light signals.</li>
+                    <li>Timeout logic for persistent alert in case of no driver response.</li>
+                    <li>Clean embedded logic using Arduino (no external computing needed).</li>
+                </ul>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">Technical Overview:</h4>
+                 <p class="text-gray-400 mb-4">The capacitive touch sensor is used to continuously detect the presence of the driver’s hand on the steering wheel. The tilt sensor identifies the driver’s head orientation. If both sensors report fatigue conditions, the system activates a buzzer and LED and starts a 10-second countdown. If the driver does not respond, the alert continues.</p>
+                <div class="mt-6">
+                    <a href="https://github.com/mohammedryn/fatigue-detection-system" target="_blank" rel="noopener noreferrer" class="github-button inline-block px-6 py-2 rounded-lg text-white font-semibold">
+                        View Code on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="fruitbridge-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">FruitBridge: Amazon Sambhav Finalist</h3>
+                <button id="close-fruitbridge-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div>
+                 <div class="mb-4">
+                    <img src="assets/fruitbridge.jpg" alt="FruitBridge Project" class="rounded-lg w-full object-cover">
+                </div>
+                <p class="mb-4 text-gray-300">FruitBridge is a project developed for the Amazon Sambhav Hackathon, where it was selected as a Top 20 Finalist from over 50,000 participants. The project aims to bridge the gap between farmers and consumers, providing a platform for fair trade and fresh produce.</p>
+                <div class="mt-6">
+                    <a href="https://github.com/mohammedryn/FruitBridge" target="_blank" rel="noopener noreferrer" class="github-button inline-block px-6 py-2 rounded-lg text-white font-semibold">
+                        View Code on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="light-follower-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">🔦 Light Follower Robot – Arduino Based</h3>
+                <button id="close-light-follower-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">📌 Overview</h4>
+                <p class="mb-4 text-gray-300">The Light Follower Bot is an autonomous two-wheeled mobile robot designed to detect and follow the brightest light source in its environment. This project was developed using an Arduino Uno/Nano, basic electronic components like LDRs (Light Dependent Resistors), and a motor driver module (L298N/L293D). It serves as a beginner-friendly introduction to sensor-based robotics, analog signal processing, and embedded control systems.</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🎯 Objective</h4>
+                <p class="mb-4 text-gray-300">The goal of this project was to build a light-seeking robot that could detect varying light intensities using LDR sensors and dynamically adjust its direction of movement toward the source. The bot constantly reads analog values from two LDR sensors and makes real-time decisions to turn left, right, or move forward based on the comparative intensity of light received from each side.</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🔧 Hardware Used</h4>
+                <p class="text-gray-400">Arduino Uno / Nano (ATmega328P), L298N / L293D Motor Driver Module, 2× DC Geared Motors with Wheels, 2× LDRs (Light Dependent Resistors), 2× 10kΩ Resistors (Voltage Divider Circuit), Battery Pack (7V–12V recommended), Chassis and caster wheel, Jumper wires and breadboard for prototyping.</p>
+                <div class="mt-6">
+                    <a href="https://github.com/mohammedryn/light-follower-bot" target="_blank" rel="noopener noreferrer" class="github-button inline-block px-6 py-2 rounded-lg text-white font-semibold">
+                        View Code on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sign-language-glove-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-gray-900 border border-cyan-500 rounded-lg shadow-xl p-6 w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                 <h3 class="text-2xl font-bold text-cyan-400 glow">🤖 Sign Language Interpreter & Smart Learning Glove</h3>
+                <button id="close-sign-language-glove-modal-btn" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div>
+                <p class="mb-4 text-gray-300">An intelligent wearable system designed to both recognize and teach sign language through a sensor-rich glove integrated with machine learning, servo actuation, and chatbot assistance.</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🔍 Overview</h4>
+                <p class="mb-4 text-gray-300">This project tackles two problems: 1. Helping the general population understand and recognize sign language. 2. Teaching individuals how to perform correct signs interactively. The solution is a smart glove that can interpret sign language in real-time using flex sensors and motion tracking, while also acting as an assistive learning tool by physically demonstrating signs using servo motors and an integrated AI chatbot.</p>
+                <h4 class="text-lg font-semibold text-cyan-300 mt-4 mb-2">🧠 Key Features</h4>
+                <ul class="list-disc list-inside text-gray-400 space-y-2">
+                    <li><b>Real-Time Sign Detection:</b> Equipped with flex sensors and an IMU, the glove captures finger positions and hand orientation.</li>
+                    <li><b>Machine Learning Integration:</b> Sensor data is sent to a Raspberry Pi 4, which runs a trained ML model to classify the gesture.</li>
+                    <li><b>Chatbot-Guided Learning Mode:</b> A built-in chatbot interface allows users to ask, “How do I say X in sign language?” The system responds by actuating the glove to physically demonstrate the sign.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Three.js and OrbitControls -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // --- 3D Robot Logic (unchanged) ---
+        const container = document.getElementById('robot-canvas-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(2, 2, 7);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+        const bodyMaterial = new THREE.MeshStandardMaterial({ color: 0x8899aa, metalness: 0.9, roughness: 0.4 });
+        const jointMaterial = new THREE.MeshStandardMaterial({ color: 0x333333, metalness: 0.8, roughness: 0.5 });
+        const lightMaterial = new THREE.MeshStandardMaterial({ color: 0x00ffff, emissive: 0x00ffff, emissiveIntensity: 3, toneMapped: false });
+        const robot = new THREE.Group();
+        scene.add(robot);
+        const torso = new THREE.Group();
+        const chest = new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.5, 1), bodyMaterial);
+        chest.position.y = 1.5;
+        const abdomen = new THREE.Mesh(new THREE.BoxGeometry(1, 0.7, 0.8), bodyMaterial);
+        abdomen.position.y = 0.5;
+        torso.add(chest, abdomen);
+        const headGroup = new THREE.Group();
+        const head = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), bodyMaterial);
+        const eye = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.15, 0.1), lightMaterial);
+        eye.position.set(0, 0.1, 0.45);
+        headGroup.add(head, eye);
+        headGroup.position.y = 2.6;
+        torso.add(headGroup);
+        robot.add(torso);
+        function createArm(side) { const armGroup = new THREE.Group(); const shoulder = new THREE.Mesh(new THREE.SphereGeometry(0.3, 16, 16), jointMaterial); const upperArm = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.18, 1.2, 16), bodyMaterial); upperArm.position.y = -0.8; const elbow = new THREE.Mesh(new THREE.SphereGeometry(0.22, 16, 16), jointMaterial); elbow.position.y = -1.4; const lowerArm = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.15, 1.0, 16), bodyMaterial); lowerArm.position.y = -2.1; armGroup.add(shoulder, upperArm, elbow, lowerArm); armGroup.position.set(side * 1.1, 2.0, 0); return armGroup; }
+        const leftArm = createArm(1);
+        const rightArm = createArm(-1);
+        robot.add(leftArm, rightArm);
+        function createLeg(side) { const legGroup = new THREE.Group(); const hip = new THREE.Mesh(new THREE.SphereGeometry(0.35, 16, 16), jointMaterial); const upperLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.22, 1.5, 16), bodyMaterial); upperLeg.position.y = -1.0; const knee = new THREE.Mesh(new THREE.SphereGeometry(0.28, 16, 16), jointMaterial); knee.position.y = -1.8; const lowerLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.2, 1.5, 16), bodyMaterial); lowerLeg.position.y = -2.75; const foot = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.2, 0.8), bodyMaterial); foot.position.set(0, -3.6, 0.15); legGroup.add(hip, upperLeg, knee, lowerLeg, foot); legGroup.position.set(side * 0.5, 0, 0); return legGroup; }
+        const leftLeg = createLeg(1);
+        const rightLeg = createLeg(-1);
+        robot.add(leftLeg, rightLeg);
+        robot.position.y = 3.5;
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 2.0);
+        directionalLight.position.set(8, 10, 5);
+        scene.add(directionalLight);
+        const pointLight = new THREE.PointLight(0x00ffff, 100, 15);
+        pointLight.position.set(0, 2.5, 4);
+        scene.add(pointLight);
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.enablePan = false;
+        controls.minDistance = 4;
+        controls.maxDistance = 15;
+        controls.target.set(0, 1.5, 0);
+        controls.update();
+        const clock = new THREE.Clock();
+        function animate() { requestAnimationFrame(animate); const elapsedTime = clock.getElapsedTime(); headGroup.rotation.y = Math.sin(elapsedTime * 0.5) * 0.3; leftArm.rotation.x = Math.sin(elapsedTime * 1.2) * 0.4; rightArm.rotation.x = Math.sin(elapsedTime * 1.2 + Math.PI) * 0.4; robot.position.y = 3.5 + Math.sin(elapsedTime * 2) * 0.05; controls.update(); renderer.render(scene, camera); }
+        animate();
+        window.addEventListener('resize', () => { camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+
+        // --- Modal Logic ---
+        const modals = {
+            ai: document.getElementById('ai-modal'),
+            hardware: document.getElementById('hardware-modal'),
+            design: document.getElementById('design-modal'),
+            ieee: document.getElementById('ieee-modal'),
+            volante: document.getElementById('volante-modal'),
+            walker: document.getElementById('walker-modal'),
+            cape: document.getElementById('cape-modal'),
+            corrosion: document.getElementById('corrosion-modal'),
+            aurora: document.getElementById('aurora-modal'),
+            lineFollower: document.getElementById('line-follower-modal'),
+            smartVision: document.getElementById('smart-vision-modal'),
+            tinkercad: document.getElementById('tinkercad-modal'),
+            parkingBot: document.getElementById('parking-bot-modal'),
+            fatigueDetection: document.getElementById('fatigue-detection-modal'),
+            fruitbridge: document.getElementById('fruitbridge-modal'),
+            lightFollower: document.getElementById('light-follower-modal'),
+            signLanguageGlove: document.getElementById('sign-language-glove-modal')
+        };
+
+        const cards = {
+            hardware: document.getElementById('hardware-award-card'),
+            design: document.getElementById('design-award-card'),
+            ieee: document.getElementById('ieee-card'),
+            volante: document.getElementById('volante-card'),
+            walker: document.getElementById('walker-card'),
+            cape: document.getElementById('cape-card'),
+            corrosion: document.getElementById('corrosion-card'),
+            aurora: document.getElementById('aurora-card'),
+            lineFollower: document.getElementById('line-follower-card'),
+            smartVision: document.getElementById('smart-vision-card'),
+            tinkercad: document.getElementById('tinkercad-card'),
+            parkingBot: document.getElementById('parking-bot-card'),
+            fatigueDetection: document.getElementById('fatigue-detection-card'),
+            fruitbridge: document.getElementById('fruitbridge-card'),
+            lightFollower: document.getElementById('light-follower-card'),
+            signLanguageGlove: document.getElementById('sign-language-glove-card')
+        };
+
+        const closeButtons = {
+            ai: document.getElementById('close-ai-modal-btn'),
+            hardware: document.getElementById('close-hardware-modal-btn'),
+            design: document.getElementById('close-design-modal-btn'),
+            ieee: document.getElementById('close-ieee-modal-btn'),
+            volante: document.getElementById('close-volante-modal-btn'),
+            walker: document.getElementById('close-walker-modal-btn'),
+            cape: document.getElementById('close-cape-modal-btn'),
+            corrosion: document.getElementById('close-corrosion-modal-btn'),
+            aurora: document.getElementById('close-aurora-modal-btn'),
+            lineFollower: document.getElementById('close-line-follower-modal-btn'),
+            smartVision: document.getElementById('close-smart-vision-modal-btn'),
+            tinkercad: document.getElementById('close-tinkercad-modal-btn'),
+            parkingBot: document.getElementById('close-parking-bot-modal-btn'),
+            fatigueDetection: document.getElementById('close-fatigue-detection-modal-btn'),
+            fruitbridge: document.getElementById('close-fruitbridge-modal-btn'),
+            lightFollower: document.getElementById('close-light-follower-modal-btn'),
+            signLanguageGlove: document.getElementById('close-sign-language-glove-modal-btn')
+        };
+
+        document.getElementById('generate-ideas-btn').addEventListener('click', handleGenerateIdeas);
+        
+        // Open modals
+        for (const key in cards) {
+            if(cards[key]) {
+                cards[key].addEventListener('click', () => modals[key].style.display = 'flex');
+            }
+        }
+
+        // Close modals
+        for (const key in closeButtons) {
+            if(closeButtons[key]) {
+                closeButtons[key].addEventListener('click', () => modals[key].style.display = 'none');
+            }
+        }
+
+        window.addEventListener('click', (event) => {
+            for (const key in modals) {
+                if (event.target === modals[key]) {
+                    modals[key].style.display = 'none';
+                }
+            }
+        });
+
+        // --- Certificate Carousel Logic ---
+        const certContainer = document.getElementById('cert-container');
+        const prevCertBtn = document.getElementById('prev-cert');
+        const nextCertBtn = document.getElementById('next-cert');
+        let certIndex = 0;
+        const totalCerts = document.querySelectorAll('.cert-slide').length;
+
+        function updateCarousel() {
+            certContainer.style.transform = `translateX(-${certIndex * 100}%)`;
+        }
+
+        nextCertBtn.addEventListener('click', () => {
+            certIndex = (certIndex + 1) % totalCerts;
+            updateCarousel();
+        });
+
+        prevCertBtn.addEventListener('click', () => {
+            certIndex = (certIndex - 1 + totalCerts) % totalCerts;
+            updateCarousel();
+        });
+        
+        // --- Tinkercad Carousel Logic ---
+        const tinkercadContainer = document.getElementById('tinkercad-container');
+        const prevTinkercadBtn = document.getElementById('prev-tinkercad');
+        const nextTinkercadBtn = document.getElementById('next-tinkercad');
+        let tinkercadIndex = 0;
+        const totalTinkercad = document.querySelectorAll('.tinkercad-slide').length;
+
+        function updateTinkercadCarousel() {
+            tinkercadContainer.style.transform = `translateX(-${tinkercadIndex * 100}%)`;
+        }
+
+        nextTinkercadBtn.addEventListener('click', () => {
+            tinkercadIndex = (tinkercadIndex + 1) % totalTinkercad;
+            updateTinkercadCarousel();
+        });
+
+        prevTinkercadBtn.addEventListener('click', () => {
+            tinkercadIndex = (tinkercadIndex - 1 + totalTinkercad) % totalTinkercad;
+            updateTinkercadCarousel();
+        });
+
+
+        async function handleGenerateIdeas() {
+            modals.ai.style.display = 'flex';
+            const modalContent = document.getElementById('ai-modal-content');
+            modalContent.innerHTML = '<div class="flex items-center justify-center"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-400"></div><p class="ml-3">Generating ideas...</p></div>';
+
+            const skills = Array.from(document.querySelectorAll('#skills-section .skill-item')).map(el => el.textContent).join(', ');
+            const projects = Array.from(document.querySelectorAll('#projects-section .card')).map(card => {
+                const title = card.querySelector('h3').textContent;
+                const desc = card.querySelector('p').textContent;
+                return `${title}: ${desc}`;
+            }).join('; ');
+
+            const prompt = `
+                Based on the following robotics portfolio, generate 3 innovative and specific project ideas that would be impressive for a job application.
+                For each idea, provide a project title, a brief description (2-3 sentences), and list the key technologies from the user's skillset that would be used.
+                **User's Core Skills:** ${skills}
+                **User's Existing Projects:** ${projects}
+                Format the output as clean HTML with h4 for titles, p for descriptions, and a strong tag for the technologies list. Do not include any markdown or backticks.
+            `;
+
+            try {
+                let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                const payload = { contents: chatHistory };
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates[0]?.content?.parts[0]) {
+                    modalContent.innerHTML = result.candidates[0].content.parts[0].text;
+                } else {
+                    throw new Error("Invalid response structure from API.");
+                }
+
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                modalContent.innerHTML = '<p class="text-red-400">Sorry, there was an error generating ideas. Please try again later.</p>';
+            }
+        }
+    </script>
+</body>
+</html>
